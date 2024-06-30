@@ -1,22 +1,27 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
-function Card() {
+function Card({ pokemonId, shuffleCards }) {
+	const [pokeImg, setPokeImg] = useState("");
 
-    useEffect(()=> {
-        fetchData();
-    },[])
+	useEffect(() => {
+		fetchData();
+	}, [pokemonId]);
 
-    const fetchData = async () => {
-        const response = await fetch("https://pokeapi.co/api/v2/pokemon/ditto");
-        const data = await response.json();
+	const fetchData = async () => {
+		const response = await fetch(
+			`https://pokeapi.co/api/v2/pokemon/${pokemonId}`
+		);
+		const data = await response.json();
 
-        console.log(data);
-    }
+		const pokemon = data.sprites.other.dream_world.front_default;
+		setPokeImg(pokemon);
+	};
 
 	return (
-    <div className="card">
-        <img src="" alt="poke-" />
-    </div>);
+		<div className="card" onClick={shuffleCards}>
+			<img src={pokeImg} alt={`Pokemon ${pokemonId}`} />
+		</div>
+	);
 }
 
 export default Card;

@@ -5,15 +5,15 @@
 }
 * {
 	margin: 0;
-    padding: 0;
+	padding: 0;
 }
 html,
 body {
 	height: 100%;
-    /* if you want 1rem = 10px, easier for calculations */
-    /* font-size: 62.5%; */ 
-	 -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
+	/* if you want 1rem = 10px, easier for calculations */
+	/* font-size: 62.5%; */
+	-webkit-font-smoothing: antialiased;
+	text-rendering: optimizeLegibility;
 }
 body {
 	/* line-height: 1.5; */
@@ -48,12 +48,30 @@ h6 {
 	isolation: isolate;
 }
 
+.container {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 16px;
+	justify-content: center;
+	padding: 20px;
+}
+
 .card {
 	border: 1px solid #ddd;
 	border-radius: 8px;
-	overflow: hidden;
-	margin: 16px;
-	width: 330px;
-	transition: transform 0.3s ease;
-	cursor: pointer;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+	width: 200px;
+	text-align: center;
+	padding: 16px;
+	background-color: #fff;
+	transition: transform 0.2s;
+}
+
+.card:hover {
+	transform: scale(1.05);
+}
+
+.card img {
+	width: 100%;
+	height: auto;
 }
