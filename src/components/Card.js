@@ -18,7 +18,10 @@ function Card({ pokemonId, shuffleCards }) {
 	};
 
 	return (
-		<div className="card" onClick={shuffleCards}>
+		<div
+			className="bg-white border border-gray-300 rounded-lg shadow-md w-[170px] text-center p-4 transition-transform duration-200 hover:scale-105"
+			onClick={shuffleCards}
+		>
 			<img src={pokeImg} alt={`Pokemon ${pokemonId}`} />
 		</div>
 	);

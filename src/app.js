@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom/client";
 import Card from "./components/Card";
+import bgImage from "./images/bg.jpg";
+import Winner from "./components/Winner";
+import PlayAgainModal from "./components/PlayAgainModal";  
 
 const App = () => {
 	const [pokemonIds, setPokemonIds] = useState([
@@ -9,6 +12,8 @@ const App = () => {
 	const [currentScore, setCurrentScore] = useState(0);
 	const [bestScore, setBestScore] = useState(0);
 	const [clickedCards, setClickedCards] = useState([]);
+	const [showWinner, setShowWinner] = useState(false);
+	const [showPlayAgainModal, setShowPlayAgainModal] = useState(false);
 
 	const shuffleArray = (array) => {
 		let shuffledArray = array.slice();
@@ -24,6 +29,7 @@ const App = () => {
 
 	const shuffleCards = (id) => {
 		if (clickedCards.includes(id)) {
+			setShowPlayAgainModal(true);
 			setCurrentScore(0);
 			setClickedCards([]);
 		} else {
@@ -32,6 +38,9 @@ const App = () => {
 				const newScore = prevScore + 1;
 				if (newScore > bestScore) {
 					setBestScore(newScore);
+					if (newScore === 12) {
+						setShowWinner(true);
+					}
 				}
 				return newScore;
 			});
@@ -39,23 +48,32 @@ const App = () => {
 		setPokemonIds(shuffleArray(pokemonIds));
 	};
 
+	
+
 	return (
-		<div className="app">
-			<div className="header">
-				{/* <h1>Memory Game</h1> */}
+		<div>
+			<img src={bgImage} alt="background" className="bg-cover absolute -z-10" />
+			<div className="flex flex-col justify-between items-center">
 				<img
+					className="w-[36rem] m-4"
 					src="https://greenarron.github.io/pikapuzzle/pikapuzzle.svg"
-					alt="pokemon-logo" id="logo"
+					alt="pokemon-logo"
 				/>
-				<div className="scores">
-					<p>Current Score: {currentScore}</p>
-					<p>Best Score: {bestScore}</p>
+				<div className="font-mono flex text-[2rem] bg-orange-300 opacity-[80%]">
+					<p className="p-3">Current Score: {currentScore}</p>
+					<p className="p-3">Best Score: {bestScore}</p>
 				</div>
 			</div>
-			<div className="container">
+			<div className="flex flex-wrap gap-4 justify-center p-5 w-4/5 mx-auto mt-12">
 				{pokemonIds.map((id) => (
 					<Card key={id} pokemonId={id} shuffleCards={() => shuffleCards(id)} />
 				))}
+				{showWinner && (
+					<Winner onClose={() => setShowWinner(false)} /> 
+				)}
+				{showPlayAgainModal && (
+					<PlayAgainModal onClose={() => setShowPlayAgainModal(false)} />
+				)}
 			</div>
 		</div>
 	);
